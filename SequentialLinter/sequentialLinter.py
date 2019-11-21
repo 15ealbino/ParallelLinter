@@ -1,4 +1,6 @@
 # based on https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-python/
+
+
 def checkFile(jsFile):
     open_list = ["[", "{", "("]
     close_list = ["]", "}", ")"]
