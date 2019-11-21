@@ -25,6 +25,6 @@ def run(jsfile):
         while line:
             line = fp.readline()
             s+= line
-    checkFile(s)
+    return(checkFile(s))
     
     
