@@ -1,6 +1,8 @@
 #Sequential version
-import sys
+import glob
 from sequentialLinter import checkFile as run
-jsFile = sys.argv[0]
 
-run(jsFile)
+directory = input('Enter your directory: ')
+lstOfFiles = glob.glob(directory +"*.txt")
+for i in lstOfFiles:
+    run(i)
