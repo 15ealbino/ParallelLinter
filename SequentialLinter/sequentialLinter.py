@@ -19,7 +19,6 @@ def checkFile(jsFile):
             else:
                 return "Unbalanced at line {}".format(newLineCount)
     if len(stack) == 0:
-        print(newLineCount)
         return "File is all good"
 
 
