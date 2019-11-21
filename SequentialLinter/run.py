@@ -1,6 +1,6 @@
 # Sequential version
 import glob
-from sequentialLinter import checkFile as run
+from sequentialLinter import run
 
 directory = input('Enter your directory: ')
 lstOfFiles = glob.glob(directory +"*.js")
