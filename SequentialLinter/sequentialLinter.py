@@ -1,26 +1,30 @@
 # based on https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-python/
-
-
 def checkFile(jsFile):
-    open_list = ["[", "{", "("]
-    close_list = ["]", "}", ")"]
+    open_list = ["[","{","("] 
+    close_list = ["]","}",")"] 
 
-    with open(jsFile) as fp:
+    stack = []
+    for i in jsFile:
+        if i in open_list:
+            stack.append(i)
+        elif i in close_list:
+            pos = close_list.index(i)
+            if((len(stack) > 0) and (open_list[pos] == stack[len(stack)-1])):
+                stack.pop()
+            else:
+                return("Unbalanced at line")
+    if len(stack) == 0:
+        return ("File is all good")
+        
+
+def run(jsfile): 
+    s = ""
+    with open(jsfile) as fp:
         line = fp.readline()
-        cnt = 1
-        stack = []
+        s += line
         while line:
-            print("Line {}: {}".format(cnt, line.strip()))
             line = fp.readline()
-            cnt += 1
-            for i in line:
-                if i in open_list:
-                    stack.append(i)
-                elif i in close_list:
-                    pos = close_list.index(i)
-                if (len(stack) > 0) and (open_list[pos] == stack[len(stack) - 1]):
-                    stack.pop()
-                else:
-                    return ("Unbalanced at line ", cnt)
-        if len(stack) == 0:
-            return "File is all good"
+            s+= line
+    checkFile(s)
+    
+    

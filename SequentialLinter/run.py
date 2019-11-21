@@ -3,6 +3,8 @@ import glob
 from sequentialLinter import checkFile as run
 
 directory = input("Enter your directory: ")
-lstOfFiles = glob.glob(directory + "*.js")
+lstOfFiles = []
+lstOfFiles.append()
 for i in lstOfFiles:
-    run(i)
+    error = run(i)
+    print(error)
