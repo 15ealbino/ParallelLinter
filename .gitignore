@@ -1,3 +1,7 @@
 .vscode
 .DS_Store
+<<<<<<< HEAD
+*.pyc
+=======
 __pycache__
+>>>>>>> Eric-Test
