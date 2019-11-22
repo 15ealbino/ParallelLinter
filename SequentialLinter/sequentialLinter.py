@@ -12,7 +12,7 @@ def checkFile(jsFile):
         if i == "\n":
             newLineCount += 1
         if i in open_list:
-            stack.append([i,newLineCount])
+            stack.append((i,newLineCount))
         elif i in close_list:
             pos = close_list.index(i)
             if (len(stack) > 0) and (open_list[pos] == stack[len(stack) - 1][0]):
