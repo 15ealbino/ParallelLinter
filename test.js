@@ -8,11 +8,11 @@ class test {
         return this.x + this.y
     }
 
-    subtract(){
+    subtract({
         return this.x - this.y
     }
 
-    multiply(){
+    multiply({
         return this.x * this.y
     }
     divide(){
