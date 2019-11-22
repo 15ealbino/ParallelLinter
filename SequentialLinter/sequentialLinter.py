@@ -8,6 +8,7 @@ def checkFile(jsFile):
     newLineCount = 1
     stack = []
     returnStr = ""
+    fixError = 0
     for i in jsFile:
         if i == "\n":
             newLineCount += 1
@@ -22,8 +23,10 @@ def checkFile(jsFile):
                     returnStr += "Extra close " + i + "on line " + str(newLineCount)
                 else:
                     for j in stack:
-                        error = "The " + j[0] + " on line " + str(j[1]) +  " is not closed \n"
-                        returnStr += error
+                        if fixError != 0:
+                            error = "The " + j[0] + " on line " + str(j[1]) +  " is not closed \n"
+                            returnStr += error
+                        fixError = 1
     if len(stack) == 0 and returnStr == "":
         returnStr =  "File is all good"
     return returnStr

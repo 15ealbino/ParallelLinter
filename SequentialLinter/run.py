@@ -6,4 +6,8 @@ directory = input("Enter your directory: ")
 lstOfFiles = glob.glob(directory + "*.js")
 for i in lstOfFiles:
     error = run(i)
-    print(error)
+    if(error == "File is all good"):
+        print(i + " has no errors")
+    else:
+        print("The file " + i + " has the following errors: " + "\n" + error)
+    

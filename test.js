@@ -1,21 +1,15 @@
-class test {
-    constructor(x,y) {
-        this.x = x
-        this.y = y
+(testMethod = x => {
+    console.log(x)
+})(1);
+
+class Test {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
     }
 
-    add(){
-        return this.x + this.y
-    }
-
-    subtract({
-        return this.x - this.y
-    }
-
-    multiply({
-        return this.x * this.y
-    }
-    divide(){
-        return this.x / this.y
+    getVals( {
+        console.log(this.x)
+        console.log(this.y)
     }
 }
