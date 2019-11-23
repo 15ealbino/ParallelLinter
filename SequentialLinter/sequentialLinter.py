@@ -1,32 +1,45 @@
 # based on https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-python/
 
 
-def checkFile(jsFile):
-    open_list = ["[", "{", "("]
-    close_list = ["]", "}", ")"]
+def is_matched(expression):
+    """
+    Finds out how balanced an expression is.
+    With a string containing only brackets.
 
-    newLineCount = 1
-    stack = []
-    returnStr = ""
-    for i in jsFile:
-        if i == "\n":
-            newLineCount += 1
-        if i in open_list:
-            stack.append((i,newLineCount))
-        elif i in close_list:
-            pos = close_list.index(i)
-            if (len(stack) > 0) and (open_list[pos] == stack[len(stack) - 1][0]):
-                stack.pop()
+    >>> is_matched('[]()()(((([])))')
+    False
+    >>> is_matched('[](){{{[]}}}')
+    True
+    """
+    opening = tuple("({[")
+    closing = tuple(")}]")
+    mapping = dict(zip(opening, closing))
+    queue = []
+    line_number = 1
+    return_str = ""
+
+    for letter in expression:
+        if letter is "\n":
+            line_number += 1
+        if letter in opening:
+            queue.append((mapping[letter], line_number))
+        elif letter in closing:
+            if not queue:
+                return_str += "Unopened closing {} on line {}".format(
+                    letter, line_number
+                )
+            elif letter != queue[-1][0]:
+                popped = queue.pop()
+                return_str += "There's a missing {} on line {}\n".format(
+                    popped[0], popped[1]
+                )
             else:
-                if len(stack) == 0:
-                    returnStr += "Extra close " + i + "on line " + str(newLineCount)
-                else:
-                    for j in stack:
-                        error = "The " + j[0] + " on line " + str(j[1]) +  " is not closed \n"
-                        returnStr += error
-    if len(stack) == 0 and returnStr == "":
-        returnStr =  "File is all good"
-    return returnStr
+                queue.pop()
+    if not queue and not return_str:
+        return "All good"
+    else:
+        return return_str
+
 
 def run(jsfile):
     s = ""
@@ -36,5 +49,5 @@ def run(jsfile):
         while line:
             line = fp.readline()
             s += line
-    return checkFile(s)
+    return is_matched(s)
 
