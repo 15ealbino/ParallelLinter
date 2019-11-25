@@ -2,15 +2,6 @@
 
 
 def is_matched(file_name, expression):
-    """
-    Finds out how balanced an expression is.
-    With a string containing only brackets.
-
-    >>> is_matched('[]()()(((([])))')
-    False
-    >>> is_matched('[](){{{[]}}}')
-    True
-    """
     opening = tuple("({[")
     closing = tuple(")}]")
     mapping = dict(zip(opening, closing))
