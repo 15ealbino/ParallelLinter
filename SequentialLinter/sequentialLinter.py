@@ -1,7 +1,7 @@
-# based on https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-python/
+# Based on https://codereview.stackexchange.com/questions/180567/checking-for-balanced-brackets-in-python
 
 
-def is_matched(expression):
+def is_matched(file_name, expression):
     """
     Finds out how balanced an expression is.
     With a string containing only brackets.
@@ -14,31 +14,40 @@ def is_matched(expression):
     opening = tuple("({[")
     closing = tuple(")}]")
     mapping = dict(zip(opening, closing))
-    queue = []
+    stack = []
     line_number = 1
     return_str = ""
 
     for letter in expression:
         if letter is "\n":
             line_number += 1
-        if letter in opening:
-            queue.append((mapping[letter], line_number))
+        elif letter in opening:
+            stack.append((mapping[letter], line_number))
         elif letter in closing:
-            if not queue:
+            if not stack:
                 return_str += "Unopened closing {} on line {}".format(
                     letter, line_number
                 )
-            elif letter != queue[-1][0]:
-                popped = queue.pop()
-                return_str += "There's a missing {} on line {}\n".format(
-                    popped[0], popped[1]
-                )
+            elif letter != stack[-1][0]:
+                popped = []
+                stack.reverse()
+                temp = [x for x in stack]
+                temp.reverse()
+                for i in stack:
+                    if i[0] != letter:
+                        popped.append(temp.pop())
+                temp.reverse()
+                stack = [x for x in temp]
+                popped.reverse()
+                for i in popped:
+                    return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
             else:
-                queue.pop()
-    if not queue and not return_str:
-        return "All good"
+                stack.pop()
+    print("{}:".format(file_name))
+    if not stack and not return_str:
+        return "All good\n"
     else:
-        return return_str
+        return "{}\n".format(return_str)
 
 
 def run(jsfile):
@@ -49,5 +58,5 @@ def run(jsfile):
         while line:
             line = fp.readline()
             s += line
-    return is_matched(s)
+    return is_matched(jsfile, s)
 
