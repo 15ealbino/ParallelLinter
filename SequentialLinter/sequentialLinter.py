@@ -46,6 +46,10 @@ def is_matched(file_name, expression):
     print("{}:".format(file_name))
     if not stack and not return_str:
         return "All good\n"
+    elif stack:
+        for i in stack:
+            return_str += "Unclosed {} on line {}\n".format(i[0], i[1])
+        return "{}\n".format(return_str)
     else:
         return "{}\n".format(return_str)
 
