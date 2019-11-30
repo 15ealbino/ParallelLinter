@@ -37,6 +37,8 @@ def is_matched(file_name, expression):
 
     print(results)
 
+    # Match equal depth (), {}, [] characters
+
 
 def run(jsfile):
     s = ""
