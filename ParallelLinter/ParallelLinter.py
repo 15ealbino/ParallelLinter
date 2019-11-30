@@ -3,10 +3,15 @@ import multiprocessing as mp
 
 
 def get_depth(expression, char, char_index, output):
-    pass
+    print(char, char_index)
+    output.put((char, char_index))
 
 
 def is_matched(file_name, expression):
+    """
+    >>> is_matched('test.js', '()')
+    [('(', 0), (')', 1)]
+    """
     opening = tuple("({[")
     closing = tuple(")}]")
     mapping = dict(zip(opening, closing))
@@ -27,6 +32,10 @@ def is_matched(file_name, expression):
 
     for p in processes:
         p.join()
+
+    results = [output.get() for p in processes]
+
+    print(results)
 
 
 def run(jsfile):
