@@ -1,8 +1,7 @@
 # parallel linter
 import multiprocessing as mp
+import math
 
-broken_up_sets = [[{, (, ), (, ), [, ]], [(, {, [, ], }], [], []]
-# is_matched(broken_up_sets[0] + broken_up_sets[1])
 """
 ___ ___ ___ ___
  \  /    \   /
@@ -17,48 +16,107 @@ broken_up_sets[i:i+2] where i += 2 after each new call to is_matched with new se
 create new function for getting specifics of problems when len(broken_up_sets) == 1
 """
 
+
+def split_expression(expression, num_splits=4):
+    n = math.ceil(len(expression) / num_splits)
+    temp = [expression[i : i + n] for i in range(0, len(expression), n)]
+    return temp
+
+
+def is_already_matched(expression, exp_index):
+    opening = tuple("({[")
+    closing = tuple(")}]")
+    mapping = dict(zip(opening, closing))
+    stack = []
+    line_number = 1
+
+    for letter in expression:
+        if letter is "\n":
+            line_number += 1
+        elif letter in opening:
+            stack.append((mapping[letter], line_number))
+        elif letter in closing:
+            if not stack:
+                queue.put((False, exp_index))
+                return
+            elif letter != stack[-1][0]:
+                queue.put((False, exp_index))
+                return
+            else:
+                stack.pop()
+    if not stack:
+        queue.put((True, exp_index))
+        return
+    else:
+        queue.put((False, exp_index))
+        return
+
+
+queue = mp.Queue()
+
+
+def p_check(expression):
+    """
+    >>> p_check('{()()()[][()][()]()[()()[()]]}')
+    [(False, 0), (False, 1), (False, 2), (False, 3)]
+    """
+    expression_list = split_expression(expression, 4)
+    processes = []
+    for i, exp in enumerate(expression_list):
+        processes.append(mp.Process(target=is_already_matched, args=(exp, i)))
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+    results = [queue.get() for _ in processes]
+    print(results)
+
+
+p_check("{()()()[][()][()]()[()()[()]]}")
+
+
 def is_matched(expression):
     opening = tuple("({[")
-        closing = tuple(")}]")
-        mapping = dict(zip(opening, closing))
-        stack = []
-        line_number = 1
-        return_str = ""
+    closing = tuple(")}]")
+    mapping = dict(zip(opening, closing))
+    stack = []
+    line_number = 1
+    return_str = ""
 
-        for letter in expression:
-            if letter is "\n":
-                line_number += 1
-            elif letter in opening:
-                stack.append((mapping[letter], line_number))
-            elif letter in closing:
-                if not stack:
-                    return_str += "Unopened closing {} on line {}".format(
-                        letter, line_number
-                    )
-                elif letter != stack[-1][0]:
-                    popped = []
-                    stack.reverse()
-                    temp = [x for x in stack]
-                    temp.reverse()
-                    for i in stack:
-                        if i[0] != letter:
-                            popped.append(temp.pop())
-                    temp.reverse()
-                    stack = [x for x in temp]
-                    popped.reverse()
-                    for i in popped:
-                        return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
-                else:
-                    stack.pop()
-        print("{}:".format(file_name))
-        if not stack and not return_str:
-            return "All good\n"
-        elif stack:
-            for i in stack:
-                return_str += "Unclosed {} on line {}\n".format(i[0], i[1])
-            return "{}\n".format(return_str)
-        else:
-            return "{}\n".format(return_str)
+    for letter in expression:
+        if letter is "\n":
+            line_number += 1
+        elif letter in opening:
+            stack.append((mapping[letter], line_number))
+        elif letter in closing:
+            if not stack:
+                return_str += "Unopened closing {} on line {}".format(
+                    letter, line_number
+                )
+            elif letter != stack[-1][0]:
+                popped = []
+                stack.reverse()
+                temp = [x for x in stack]
+                temp.reverse()
+                for i in stack:
+                    if i[0] != letter:
+                        popped.append(temp.pop())
+                temp.reverse()
+                stack = [x for x in temp]
+                popped.reverse()
+                for i in popped:
+                    return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
+            else:
+                stack.pop()
+    print("{}:".format(file_name))
+    if not stack and not return_str:
+        return "All good\n"
+    elif stack:
+        for i in stack:
+            return_str += "Unclosed {} on line {}\n".format(i[0], i[1])
+        return "{}\n".format(return_str)
+    else:
+        return "{}\n".format(return_str)
 
 
 # def is_matched(file_name, expression):
