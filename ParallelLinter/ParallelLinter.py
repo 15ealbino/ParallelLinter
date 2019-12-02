@@ -19,37 +19,83 @@ create new function for getting specifics of problems when len(broken_up_sets) =
 
 def split_expression(expression, num_splits=4):
     n = math.ceil(len(expression) / num_splits)
-    temp = [expression[i : i + n] for i in range(0, len(expression), n)]
-    return temp
+    return [expression[i : i + n] for i in range(0, len(expression), n)]
 
 
-def is_already_matched(expression, exp_index):
+def get_unmatched(expression):
+    """
+    Returns a list of values that weren't paired in the order of when they occured.
+    """
     opening = tuple("({[")
     closing = tuple(")}]")
     mapping = dict(zip(opening, closing))
+    rmapping = dict(zip(closing, opening))
     stack = []
     line_number = 1
+    incorrects = []
 
     for letter in expression:
         if letter is "\n":
             line_number += 1
         elif letter in opening:
-            stack.append((mapping[letter], line_number))
+            stack.append([mapping[letter], line_number])
         elif letter in closing:
             if not stack:
-                queue.put((False, exp_index))
-                return
+                incorrects.append([letter, line_number])
+
             elif letter != stack[-1][0]:
-                queue.put((False, exp_index))
-                return
+                popped = []
+                stack.reverse()
+                temp = [x for x in stack]
+                temp.reverse()
+                for i in stack:
+                    if i[0] != letter:
+                        popped.append(temp.pop())
+                temp.reverse()
+                stack = [x for x in temp]
+                popped.reverse()
+                for i in popped:
+                    incorrects.append([rmapping[i[0]], i[1]])
             else:
                 stack.pop()
-    if not stack:
-        queue.put((True, exp_index))
-        return
-    else:
-        queue.put((False, exp_index))
-        return
+    if not stack and not incorrects:
+        return incorrects
+    elif stack:
+        for i in stack:
+            incorrects.append([rmapping[i[0]], i[1]])
+    return sorted(incorrects, key=lambda x: x[1])
+
+
+print(get_unmatched("{()([)[]}\n{"))
+
+
+# def is_already_matched(expression, exp_index):
+#     opening = tuple("({[")
+#     closing = tuple(")}]")
+#     mapping = dict(zip(opening, closing))
+#     stack = []
+#     line_number = 1
+
+#     for letter in expression:
+#         if letter is "\n":
+#             line_number += 1
+#         elif letter in opening:
+#             stack.append((mapping[letter], line_number))
+#         elif letter in closing:
+#             if not stack:
+#                 queue.put((False, exp_index))
+#                 return
+#             elif letter != stack[-1][0]:
+#                 queue.put((False, exp_index))
+#                 return
+#             else:
+#                 stack.pop()
+#     if not stack:
+#         queue.put((True, exp_index))
+#         return
+#     else:
+#         queue.put((False, exp_index))
+#         return
 
 
 def combine_expressions(exp_list):
@@ -65,13 +111,14 @@ queue = mp.Queue()
 
 def p_check(expression):
     """
-    >>> p_check('{()()()[][()][()]()[()()[()]]}')
+    p_check('{()()()[][()][()]()[()()[()]]}')
     [(False, 0), (False, 1), (False, 2), (False, 3)]
     """
+    # Replace 4 with some calculated variable based on the size.
     expression_list = split_expression(expression, 4)
     processes = []
     for i, exp in enumerate(expression_list):
-        processes.append(mp.Process(target=is_already_matched, args=(exp, i)))
+        processes.append(mp.Process(target=get_unmatched, args=(exp, i)))
     for p in processes:
         p.start()
     for p in processes:
@@ -86,10 +133,11 @@ def p_check(expression):
             temp.append([])
         if len(temp) is 2:
             combined_exps.append(combine_expressions(temp))
+            temp = []
 
 
 # Temp call
-p_check("{()()()[][()][()]()[()()[()]]}")
+# p_check("{()()()[][()][()]()[()()[()]]}")
 
 
 def is_matched(expression):
