@@ -52,6 +52,14 @@ def is_already_matched(expression, exp_index):
         return
 
 
+def combine_expressions(exp_list):
+    new_list_amount = len(exp_list) // 2
+    new_list = []
+    for lst in range(0, len(exp_list), new_list_amount):
+        new_list.append(exp_list[lst : lst + 2])
+    return new_list
+
+
 queue = mp.Queue()
 
 
@@ -69,9 +77,18 @@ def p_check(expression):
     for p in processes:
         p.join()
     results = [queue.get() for _ in processes]
-    print(results)
+    temp = []
+    combined_exps = []
+    for res in results:
+        if res[0] is False:
+            temp.append(res)
+        elif res[1] is True:
+            temp.append([])
+        if len(temp) is 2:
+            combined_exps.append(combine_expressions(temp))
 
 
+# Temp call
 p_check("{()()()[][()][()]()[()()[()]]}")
 
 
