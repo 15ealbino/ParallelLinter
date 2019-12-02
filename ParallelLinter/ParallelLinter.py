@@ -22,6 +22,44 @@ def split_expression(expression, num_splits=4):
     return [expression[i : i + n] for i in range(0, len(expression), n)]
 
 
+def is_matched(expression):
+    opening = tuple("({[")
+    closing = tuple(")}]")
+    mapping = dict(zip(opening, closing))
+    stack = []
+    return_str = ""
+
+    for character in expression:
+        if character[0] in opening:
+            stack.append([mapping[character[0]], character[1]])
+        elif character[0] in closing:
+            if not stack:
+                return_str += "Unopened closing {} on line {}".format(
+                    character[0], character[1]
+                )
+            elif character[0] != stack[-1][0]:
+                popped = []
+                for i in stack:
+                    if i[0] != character[0]:
+                        popped.append(stack.pop())
+                    else:
+                        stack.pop()
+                        break
+                popped.reverse()
+                for i in popped:
+                    return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
+            else:
+                stack.pop()
+    if not stack and not return_str:
+        return "All good\n"
+    elif stack:
+        for i in stack:
+            return_str += "Unclosed {} on line {}\n".format(i[0], i[1])
+        return "{}\n".format(return_str)
+    else:
+        return "{}\n".format(return_str)
+
+
 def get_unmatched(expression):
     """
     Returns a list of values that weren't paired in the order of when they occured.
@@ -45,14 +83,12 @@ def get_unmatched(expression):
 
             elif letter != stack[-1][0]:
                 popped = []
-                stack.reverse()
-                temp = [x for x in stack]
-                temp.reverse()
                 for i in stack:
                     if i[0] != letter:
-                        popped.append(temp.pop())
-                temp.reverse()
-                stack = [x for x in temp]
+                        popped.append(stack.pop())
+                    else:
+                        stack.pop()
+                        break
                 popped.reverse()
                 for i in popped:
                     incorrects.append([rmapping[i[0]], i[1]])
@@ -63,154 +99,48 @@ def get_unmatched(expression):
     elif stack:
         for i in stack:
             incorrects.append([rmapping[i[0]], i[1]])
-    return sorted(incorrects, key=lambda x: x[1])
+    queue.put(sorted(incorrects, key=lambda x: x[1]))
 
 
-print(get_unmatched("{()([)[]}\n{"))
-
-
-# def is_already_matched(expression, exp_index):
-#     opening = tuple("({[")
-#     closing = tuple(")}]")
-#     mapping = dict(zip(opening, closing))
-#     stack = []
-#     line_number = 1
-
-#     for letter in expression:
-#         if letter is "\n":
-#             line_number += 1
-#         elif letter in opening:
-#             stack.append((mapping[letter], line_number))
-#         elif letter in closing:
-#             if not stack:
-#                 queue.put((False, exp_index))
-#                 return
-#             elif letter != stack[-1][0]:
-#                 queue.put((False, exp_index))
-#                 return
-#             else:
-#                 stack.pop()
-#     if not stack:
-#         queue.put((True, exp_index))
-#         return
-#     else:
-#         queue.put((False, exp_index))
-#         return
+# Test run
+# print(get_unmatched("{\n()\n([)\n[]\n}\n{"))
 
 
 def combine_expressions(exp_list):
-    new_list_amount = len(exp_list) // 2
-    new_list = []
-    for lst in range(0, len(exp_list), new_list_amount):
-        new_list.append(exp_list[lst : lst + 2])
-    return new_list
+    return [x for x in exp_list]
 
 
 queue = mp.Queue()
 
 
+def combine_to_list(characters_list):
+    temp = []
+    for i in characters_list:
+        for j in i:
+            if j:
+                temp.append(j)
+    return temp
+
+
 def p_check(expression):
-    """
-    p_check('{()()()[][()][()]()[()()[()]]}')
-    [(False, 0), (False, 1), (False, 2), (False, 3)]
-    """
     # Replace 4 with some calculated variable based on the size.
     expression_list = split_expression(expression, 4)
     processes = []
     for i, exp in enumerate(expression_list):
-        processes.append(mp.Process(target=get_unmatched, args=(exp, i)))
+        processes.append(mp.Process(target=get_unmatched, args=(exp,)))
     for p in processes:
         p.start()
     for p in processes:
         p.join()
     results = [queue.get() for _ in processes]
-    temp = []
-    combined_exps = []
-    for res in results:
-        if res[0] is False:
-            temp.append(res)
-        elif res[1] is True:
-            temp.append([])
-        if len(temp) is 2:
-            combined_exps.append(combine_expressions(temp))
-            temp = []
+    print(results)
+    combined_exps = combine_to_list(results)
+    print(is_matched(combined_exps))
 
 
 # Temp call
-# p_check("{()()()[][()][()]()[()()[()]]}")
-
-
-def is_matched(expression):
-    opening = tuple("({[")
-    closing = tuple(")}]")
-    mapping = dict(zip(opening, closing))
-    stack = []
-    line_number = 1
-    return_str = ""
-
-    for letter in expression:
-        if letter is "\n":
-            line_number += 1
-        elif letter in opening:
-            stack.append((mapping[letter], line_number))
-        elif letter in closing:
-            if not stack:
-                return_str += "Unopened closing {} on line {}".format(
-                    letter, line_number
-                )
-            elif letter != stack[-1][0]:
-                popped = []
-                stack.reverse()
-                temp = [x for x in stack]
-                temp.reverse()
-                for i in stack:
-                    if i[0] != letter:
-                        popped.append(temp.pop())
-                temp.reverse()
-                stack = [x for x in temp]
-                popped.reverse()
-                for i in popped:
-                    return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
-            else:
-                stack.pop()
-    print("{}:".format(file_name))
-    if not stack and not return_str:
-        return "All good\n"
-    elif stack:
-        for i in stack:
-            return_str += "Unclosed {} on line {}\n".format(i[0], i[1])
-        return "{}\n".format(return_str)
-    else:
-        return "{}\n".format(return_str)
-
-
-# def is_matched(file_name, expression):
-#     opening = tuple("({[")
-#     closing = tuple(")}]")
-#     mapping = dict(zip(opening, closing))
-#     stack = []
-#     line_number = 1
-#     return_str = ""
-
-#     output = mp.Queue()
-
-#     processes = [
-#         mp.Process(target=get_depth, args=(expression, p, i, output))
-#         for i, p in enumerate(expression)
-#         if p in opening or p in closing
-#     ]
-
-#     for p in processes:
-#         p.start()
-
-#     for p in processes:
-#         p.join()
-
-#     results = [output.get() for p in processes]
-
-#     print(results)
-
-#     # Match equal depth (), {}, [] characters
+# p_check("{()\n()()\n[]\n[()]\n[()]\n()[()()\n[()]\n]}")
+p_check("{()()[()}{()()}")
 
 
 def run(jsfile):
