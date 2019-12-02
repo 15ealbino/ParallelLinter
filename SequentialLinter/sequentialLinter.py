@@ -21,14 +21,12 @@ def is_matched(file_name, expression):
                 )
             elif letter != stack[-1][0]:
                 popped = []
-                stack.reverse()
-                temp = [x for x in stack]
-                temp.reverse()
                 for i in stack:
                     if i[0] != letter:
-                        popped.append(temp.pop())
-                temp.reverse()
-                stack = [x for x in temp]
+                        popped.append(stack.pop())
+                    else:
+                        stack.pop()
+                        break
                 popped.reverse()
                 for i in popped:
                     return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
