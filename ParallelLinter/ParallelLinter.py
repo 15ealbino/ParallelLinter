@@ -2,20 +2,6 @@
 import multiprocessing as mp
 import math
 
-"""
-___ ___ ___ ___
- \  /    \   /
-  --      --
-   \      /
-    ------
-
-Go through and break up the expression in 4 - x number of pieces based on the size of the file
-If there is a problem, return fail right away and have that be appended to the global list of sets.
-    if not broken, just append an empty list to the global set of lists and if one is an empty list, just ignore that run immediately.
-broken_up_sets[i:i+2] where i += 2 after each new call to is_matched with new sets, keep this until i+2 > len(broken_up_sets)
-create new function for getting specifics of problems when len(broken_up_sets) == 1
-"""
-
 
 def split_expression(expression, num_splits=4):
     n = math.ceil(len(expression) / num_splits)
@@ -39,15 +25,32 @@ def is_matched(expression):
                 )
             elif character[0] != stack[-1][0]:
                 popped = []
-                for i in stack:
-                    if i[0] != character[0]:
-                        popped.append(stack.pop())
-                    else:
+                stack.reverse()
+                found_pair = False
+                for i in range(len(stack) - 1):
+                    if stack[i][0][0] == character[0]:
+                        found_pair = True
+                if found_pair:
+                    for i in stack:
+                        if i[0] != character[0]:
+                            popped.append(stack.pop())
+                        else:
+                            stack.pop()
+                            break
+                    stack.reverse()
+                    popped.reverse()
+                    for i in popped:
+                        return_str += "There's a missing {} on line {}\n".format(
+                            i[0], i[1]
+                        )
+                else:
+                    stack.reverse()
+                    incorrect = stack.pop()
+                    if stack:
                         stack.pop()
-                        break
-                popped.reverse()
-                for i in popped:
-                    return_str += "There's a missing {} on line {}\n".format(i[0], i[1])
+                    return_str += "There's an extra closing {} on line {}\n".format(
+                        incorrect[0], incorrect[1]
+                    )
             else:
                 stack.pop()
     if not stack and not return_str:
@@ -80,18 +83,31 @@ def get_unmatched(expression):
         elif letter in closing:
             if not stack:
                 incorrects.append([letter, line_number])
-
             elif letter != stack[-1][0]:
                 popped = []
+                temp = [x for x in stack]
+                stack.reverse()
+                found_pair = False
                 for i in stack:
-                    if i[0] != letter:
-                        popped.append(stack.pop())
-                    else:
+                    if i[0] == letter:
+                        found_pair = True
+                if found_pair:
+                    for i in stack:
+                        if i[0] != letter:
+                            popped.append(temp.pop())
+                        else:
+                            temp.pop()
+                            break
+                    temp.reverse()
+                    stack = temp
+                    popped.reverse()
+                    for i in popped:
+                        incorrects.append([rmapping[i[0]], i[1]])
+                else:
+                    stack.reverse()
+                    stack.pop()
+                    if stack:
                         stack.pop()
-                        break
-                popped.reverse()
-                for i in popped:
-                    incorrects.append([rmapping[i[0]], i[1]])
             else:
                 stack.pop()
     if not stack and not incorrects:
@@ -106,25 +122,37 @@ def get_unmatched(expression):
 # print(get_unmatched("{\n()\n([)\n[]\n}\n{"))
 
 
-def combine_expressions(exp_list):
-    return [x for x in exp_list]
-
-
 queue = mp.Queue()
 
 
-def combine_to_list(characters_list):
-    temp = []
-    for i in characters_list:
-        for j in i:
-            if j:
-                temp.append(j)
-    return temp
+def fix_line_numbers(exp_list, expression):
+    line_number = 1
+    for i in expression:
+        for char in i:
+            if char is "\n":
+                line_number += 1
+        for exp, j in enumerate(exp_list):
+            if exp is 0:
+                continue
+            for k in j:
+                k[1] += line_number
+    return exp_list
+
+
+exp_list = [
+    [["{", 1], ["[", 3]],
+    [["]", 1], ["(", 2], ["[", 3], ["(", 3]],
+    [[")", 1], ["]", 1], ["[", 2]],
+    [["]", 3], ["}", 3]],
+]
+expression = ["{()\n()()\n[", "]\n[()(]\n[(", ")]\n()[()()", "\n[()]\n]}"]
+print(fix_line_numbers(exp_list, expression))
 
 
 def p_check(expression):
     # Replace 4 with some calculated variable based on the size.
     expression_list = split_expression(expression, 4)
+    print(expression_list)
     processes = []
     for i, exp in enumerate(expression_list):
         processes.append(mp.Process(target=get_unmatched, args=(exp,)))
@@ -134,13 +162,16 @@ def p_check(expression):
         p.join()
     results = [queue.get() for _ in processes]
     print(results)
-    combined_exps = combine_to_list(results)
-    print(is_matched(combined_exps))
+    results = fix_line_numbers(results, expression_list)
+    print(results)
+    combined_exps = [j for i in results for j in i if j]
+    print(combined_exps)
+    return is_matched(combined_exps)
 
 
 # Temp call
-# p_check("{()\n()()\n[]\n[()]\n[()]\n()[()()\n[()]\n]}")
-p_check("{()()[()}{()()}")
+print(p_check("{()\n()()\n[]\n[()(]\n[()]\n()[()()\n[()]\n]}"))
+# print(p_check("{()()[()}{()()}"))
 
 
 def run(jsfile):
