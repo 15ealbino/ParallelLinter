@@ -127,15 +127,16 @@ queue = mp.Queue()
 
 def fix_line_numbers(exp_list, expression):
     line_number = 1
+    new_lines = []
     for i in expression:
         for char in i:
             if char is "\n":
                 line_number += 1
-        for exp, j in enumerate(exp_list):
-            if exp is 0:
-                continue
-            for k in j:
-                k[1] += line_number
+        new_lines.append(line_number)
+    for index, i in enumerate(exp_list):
+        if index != 0:
+            for j in i:
+                j[1] += new_lines[index - 1] - 1
     return exp_list
 
 
