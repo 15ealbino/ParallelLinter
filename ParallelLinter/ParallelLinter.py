@@ -126,7 +126,7 @@ queue = mp.Queue()
 
 
 def fix_line_numbers(exp_list, expression):
-    line_number = 1
+    line_number = 0
     new_lines = []
     for i in expression:
         for char in i:
@@ -136,7 +136,7 @@ def fix_line_numbers(exp_list, expression):
     for index, i in enumerate(exp_list):
         if index != 0:
             for j in i:
-                j[1] += new_lines[index - 1] - 1
+                j[1] += new_lines[index - 1]
     return exp_list
 
 
@@ -153,7 +153,6 @@ print(fix_line_numbers(exp_list, expression))
 def p_check(expression):
     # Replace 4 with some calculated variable based on the size.
     expression_list = split_expression(expression, 4)
-    print(expression_list)
     processes = []
     for i, exp in enumerate(expression_list):
         processes.append(mp.Process(target=get_unmatched, args=(exp,)))
@@ -162,11 +161,8 @@ def p_check(expression):
     for p in processes:
         p.join()
     results = [queue.get() for _ in processes]
-    print(results)
     results = fix_line_numbers(results, expression_list)
-    print(results)
     combined_exps = [j for i in results for j in i if j]
-    print(combined_exps)
     return is_matched(combined_exps)
 
 
