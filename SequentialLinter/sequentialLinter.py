@@ -68,7 +68,7 @@ def is_matched(file_name, expression):
         return "{}\n".format(return_str)
 
 
-print(is_matched("ts", "]\n[()(]\n[("))
+# print(is_matched("ts", "]\n[()(]\n[("))
 
 
 def run(jsfile):
