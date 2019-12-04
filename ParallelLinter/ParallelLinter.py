@@ -167,16 +167,17 @@ def p_check(expression):
 
 
 # Temp call
-print(p_check("{()\n()()\n[]\n[()(]\n[()]\n()[()()\n[()]\n]}"))
+# print(p_check("{()\n()()\n[]\n[()(]\n[()]\n()[()()\n[()]\n]}"))
 # print(p_check("{()()[()}{()()}"))
 
 
 def run(jsfile):
     s = ""
+    print(f"{jsfile}:\n")
     with open(jsfile) as fp:
         line = fp.readline()
         s += line
         while line:
             line = fp.readline()
             s += line
-    return is_matched(jsfile, s)
+    return p_check(s)
