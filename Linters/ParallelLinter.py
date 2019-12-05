@@ -124,8 +124,7 @@ def get_unmatched(expression):
 
 queue = mp.Queue()
 
-#parallizing string in bins means that the line numbers are gonna be reset for each bin,
-#we must run this function to fix the line number for each bin
+
 def fix_line_numbers(exp_list, expression):
     line_number = 0
     new_lines = []
@@ -156,7 +155,6 @@ def p_check(expression):
     expression_list = split_expression(expression, 4)
     processes = []
     for i, exp in enumerate(expression_list):
-        #set up multi processing
         processes.append(mp.Process(target=get_unmatched, args=(exp,)))
     for p in processes:
         p.start()
@@ -172,7 +170,7 @@ def p_check(expression):
 # print(p_check("{()\n()()\n[]\n[()(]\n[()]\n()[()()\n[()]\n]}"))
 # print(p_check("{()()[()}{()()}"))
 
-#build a string from the file convert it from line to line to one big string to evaluate.
+
 def run(jsfile):
     s = ""
     print(f"{jsfile}:\n")
