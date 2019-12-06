@@ -20,7 +20,7 @@ def is_matched(expression):
             stack.append([mapping[character[0]], character[1]])
         elif character[0] in closing:
             if not stack:
-                return_str += "Unopened closing {} on line {}".format(
+                return_str += "Unopened closing {} on line {}\n".format(
                     character[0], character[1]
                 )
             elif character[0] != stack[-1][0]:
