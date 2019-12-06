@@ -22,6 +22,6 @@ The sequential algorithm tends to outperform the parallel algorithm in shorter f
 
 ![Smaller Files](images/small_files.png)
 
-However, when the files get very large, the times get to be more comparable. After a threshold of about 500 lines worth of JavaScript code, then the parallel algorithm will begin to consistently outperform the sequential version.
+However, when the files get very large, the times get to be more comparable. After a threshold of about 500 lines worth of JavaScript code, then the parallel algorithm will begin to consistently outperform the sequential version. With upwards of 100 files, the performance grows even further in favor of the parallel version.
 
 ![Large Files](images/large_files.png)
