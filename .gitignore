@@ -3,3 +3,4 @@
 *.pyc
 testFile.*
 __pycache__
+venv

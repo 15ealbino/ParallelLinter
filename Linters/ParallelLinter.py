@@ -146,8 +146,8 @@ exp_list = [
     [[")", 1], ["]", 1], ["[", 2]],
     [["]", 3], ["}", 3]],
 ]
-expression = ["{()\n()()\n[", "]\n[()(]\n[(", ")]\n()[()()", "\n[()]\n]}"]
-print(fix_line_numbers(exp_list, expression))
+# expression = ["{()\n()()\n[", "]\n[()(]\n[(", ")]\n()[()()", "\n[()]\n]}"]
+# print(fix_line_numbers(exp_list, expression))
 
 
 def p_check(expression):
@@ -173,7 +173,7 @@ def p_check(expression):
 
 def run(jsfile):
     s = ""
-    print(f"{jsfile}:\n")
+    print(f"{jsfile}:")
     with open(jsfile) as fp:
         line = fp.readline()
         s += line

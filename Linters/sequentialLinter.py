@@ -57,7 +57,6 @@ def is_matched(file_name, expression):
                     )
             else:
                 stack.pop()
-    print("{}:".format(file_name))
     if not stack and not return_str:
         return "All good\n"
     elif stack:
@@ -73,6 +72,7 @@ def is_matched(file_name, expression):
 
 def run(jsfile):
     s = ""
+    print(f"{jsfile}:")
     with open(jsfile) as fp:
         line = fp.readline()
         s += line
