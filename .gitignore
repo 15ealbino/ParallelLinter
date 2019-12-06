@@ -2,3 +2,5 @@
 .DS_Store
 *.pyc
 testFile.*
+__pycache__
+venv
