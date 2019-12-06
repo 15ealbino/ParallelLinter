@@ -5,7 +5,7 @@ def is_matched(file_name, expression):
     """
     >>> is_matched('test.js', '{}{}{()()}{([[]])}{[]}{[]}{()()}{}{}{}')
     test.js:
-    'All good\\n'
+    'No Errors\\n'
     """
     opening = tuple("({[")
     closing = tuple(")}]")
@@ -58,7 +58,7 @@ def is_matched(file_name, expression):
             else:
                 stack.pop()
     if not stack and not return_str:
-        return "All good\n"
+        return "No Errors\n"
     elif stack:
         for i in stack:
             return_str += "Unclosed {} on line {}\n".format(rmapping[i[0]], i[1])

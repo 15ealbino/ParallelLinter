@@ -54,7 +54,7 @@ def is_matched(expression):
             else:
                 stack.pop()
     if not stack and not return_str:
-        return "All good\n"
+        return "No Errors\n"
     elif stack:
         for i in stack:
             return_str += "Unclosed {} on line {}\n".format(i[0], i[1])
