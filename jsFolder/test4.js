@@ -4,14 +4,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -21,14 +21,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -38,14 +38,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -55,14 +55,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -72,14 +72,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -89,14 +89,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -106,14 +106,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -123,14 +123,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -140,14 +140,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -157,14 +157,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -174,14 +174,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -191,14 +191,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -208,14 +208,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -225,14 +225,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -242,14 +242,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -259,14 +259,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -276,14 +276,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -293,14 +293,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -310,14 +310,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -327,14 +327,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -344,14 +344,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -361,14 +361,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -378,14 +378,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -395,14 +395,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -412,14 +412,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -429,14 +429,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -446,14 +446,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -463,14 +463,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -480,14 +480,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -497,14 +497,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
@@ -514,15 +514,14 @@ var myModule = function() {
     function getPrivateVar() { return privateVar; }
     return {getPrivateVar: getPrivateVar};
   }();
-  
+
   console.log(myModule.getPrivateVar());
-  
+
   // New style.
   let privateVar;
   function getPrivateVar() { return privateVar; }
   export {privateVar};
-  
+
   // Using it
   import {getPrivateVar} from './myModule';
   console.log(getPrivateVar());
-  
