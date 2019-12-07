@@ -1,7 +1,7 @@
 # Based on https://codereview.stackexchange.com/questions/180567/checking-for-balanced-brackets-in-python
 
 
-def is_matched(file_name, expression):
+def is_matched(expression):
     """
     >>> is_matched('test.js', '{}{}{()()}{([[]])}{[]}{[]}{()()}{}{}{}')
     test.js:
@@ -22,9 +22,7 @@ def is_matched(file_name, expression):
             stack.append((mapping[letter], line_number))
         elif letter in closing:
             if not stack:
-                return_str += "Unopened closing {} on line {}\n".format(
-                    letter, line_number
-                )
+                return_str += "Unopened {} on line {}\n".format(letter, line_number)
             elif letter != stack[-1][0]:
                 popped = []
                 temp = [x for x in stack]
@@ -44,15 +42,15 @@ def is_matched(file_name, expression):
                     stack = temp
                     popped.reverse()
                     for i in popped:
-                        return_str += "There's a missing {} on line {}\n".format(
-                            i[0], i[1]
+                        return_str += "There's a missing {0} for the {2} on line {1}\n".format(
+                            i[0], i[1], rmapping[i[0]]
                         )
                 else:
                     stack.reverse()
                     incorrect = stack.pop()
                     if stack:
                         stack.pop()
-                    return_str += "There's an extra closing {} on line {}\n".format(
+                    return_str += "Unopened {} on line {}\n".format(
                         incorrect[0], incorrect[1]
                     )
             else:
@@ -67,7 +65,7 @@ def is_matched(file_name, expression):
         return "{}\n".format(return_str)
 
 
-# print(is_matched("ts", "]\n[()(]\n[("))
+print(is_matched("([)"))
 
 
 def run(jsfile):
@@ -79,5 +77,5 @@ def run(jsfile):
         while line:
             line = fp.readline()
             s += line
-    return is_matched(jsfile, s)
+    return is_matched(s)
 
