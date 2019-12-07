@@ -65,7 +65,7 @@ def is_matched(expression):
         return "{}\n".format(return_str)
 
 
-print(is_matched("([)"))
+# print(is_matched("([)"))
 
 
 def run(jsfile):
