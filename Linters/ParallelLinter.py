@@ -1,6 +1,7 @@
-# parallel linter
 import multiprocessing as mp
 import math
+
+queue = mp.Queue()
 
 
 def split_expression(expression, num_splits=4):
@@ -118,13 +119,6 @@ def get_unmatched(expression):
     queue.put(sorted(incorrects, key=lambda x: x[1]))
 
 
-# Test run
-# print(get_unmatched("{\n()\n([)\n[]\n}\n{"))
-
-
-queue = mp.Queue()
-
-
 def fix_line_numbers(exp_list, expression):
     line_number = 0
     new_lines = []
@@ -140,18 +134,7 @@ def fix_line_numbers(exp_list, expression):
     return exp_list
 
 
-# exp_list = [
-#     [["{", 1], ["[", 3]],
-#     [["]", 1], ["(", 2], ["[", 3], ["(", 3]],
-#     [[")", 1], ["]", 1], ["[", 2]],
-#     [["]", 3], ["}", 3]],
-# ]
-# expression = ["{()\n()()\n[", "]\n[()(]\n[(", ")]\n()[()()", "\n[()]\n]}"]
-# print(fix_line_numbers(exp_list, expression))
-
-
 def p_check(expression):
-    # Replace 4 with some calculated variable based on the size.
     expression_list = split_expression(expression, 4)
     processes = []
     for i, exp in enumerate(expression_list):
@@ -164,11 +147,6 @@ def p_check(expression):
     results = fix_line_numbers(results, expression_list)
     combined_exps = [j for i in results for j in i if j]
     return is_matched(combined_exps)
-
-
-# Temp call
-# print(p_check("{()\n()()\n[]\n[()(]\n[()]\n()[()()\n[()]\n]}"))
-# print(p_check("{()()[()}{()()}"))
 
 
 def run(jsfile):

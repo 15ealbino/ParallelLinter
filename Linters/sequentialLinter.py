@@ -1,6 +1,3 @@
-# Based on https://codereview.stackexchange.com/questions/180567/checking-for-balanced-brackets-in-python
-
-
 def is_matched(expression):
     """
     >>> is_matched('test.js', '{}{}{()()}{([[]])}{[]}{[]}{()()}{}{}{}')
@@ -63,9 +60,6 @@ def is_matched(expression):
         return "{}\n".format(return_str)
     else:
         return "{}\n".format(return_str)
-
-
-# print(is_matched("([)"))
 
 
 def run(jsfile):
