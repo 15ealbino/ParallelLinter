@@ -1,9 +1,4 @@
 def is_matched(expression):
-    """
-    >>> is_matched('test.js', '{}{}{()()}{([[]])}{[]}{[]}{()()}{}{}{}')
-    test.js:
-    'No Errors\\n'
-    """
     opening = tuple("({[")
     closing = tuple(")}]")
     mapping = dict(zip(opening, closing))

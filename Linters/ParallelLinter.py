@@ -65,9 +65,6 @@ def is_matched(expression):
 
 
 def get_unmatched(expression):
-    """
-    Returns a list of values that weren't paired in the order of when they occured.
-    """
     opening = tuple("({[")
     closing = tuple(")}]")
     mapping = dict(zip(opening, closing))
