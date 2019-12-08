@@ -5,6 +5,8 @@ queue = mp.Queue()
 
 
 def split_expression(expression, num_splits=4):
+    # num_splits defaults to 4 but could potentially make it more
+    # for systems with a larger number of CPU cores
     n = math.ceil(len(expression) / num_splits)
     return [expression[i : i + n] for i in range(0, len(expression), n)]
 
@@ -132,7 +134,7 @@ def fix_line_numbers(exp_list, expression):
 
 
 def p_check(expression):
-    expression_list = split_expression(expression, 4)
+    expression_list = split_expression(expression)
     processes = []
     for i, exp in enumerate(expression_list):
         processes.append(mp.Process(target=get_unmatched, args=(exp,)))
